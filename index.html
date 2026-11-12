@@ -10,7 +10,7 @@
   .head{position:absolute;top:10px;left:10px;z-index:10;background:#fff;border-radius:10px;padding:8px 12px;
         box-shadow:0 2px 8px rgba(0,0,0,.2);font-size:14px;font-weight:700}
   .head small{display:block;font-weight:400;color:#666;font-size:12px;margin-top:2px}
-  .num{width:30px;height:30px;border-radius:50%;background:#1d4ed8;color:#fff;border:2px solid #fff;
+  .num{pointer-events:auto;width:30px;height:30px;border-radius:50%;background:#1d4ed8;color:#fff;border:2px solid #fff;
        box-shadow:0 2px 6px rgba(0,0,0,.4);font:700 15px/30px sans-serif;text-align:center;cursor:pointer}
   .num.on{background:#f59e0b}
   .stn{transform:translate(-50%,-100%);text-align:center;pointer-events:none}
@@ -70,6 +70,8 @@ kakao.maps.load(()=>{
       map.panTo(pos);
     });
     new kakao.maps.CustomOverlay({map,position:pos,content:d,xAnchor:0.5,yAnchor:0.5,zIndex:60,clickable:true});
+    // 카카오 감싸개는 원래 자리에 남음 → 벌린 번호 위를 가려 클릭을 가로챔. 감싸개는 통과, 번호만 클릭
+    setTimeout(()=>{if(d.parentElement) d.parentElement.style.pointerEvents='none';},0);
   });
   kakao.maps.event.addListener(map,'click',close);
   // 붙어 있는 번호 겹침 방지: 확대 단계마다 화면에서만 벌림(좌표는 그대로)
