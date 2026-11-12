@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>수영구 원룸 매물 | 채채부동산</title>
+<style>
+  html,body{margin:0;height:100%;font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+  #map{width:100%;height:100%}
+  .head{position:absolute;top:10px;left:10px;z-index:10;background:#fff;border-radius:10px;padding:8px 12px;
+        box-shadow:0 2px 8px rgba(0,0,0,.2);font-size:14px;font-weight:700}
+  .head small{display:block;font-weight:400;color:#666;font-size:12px;margin-top:2px}
+  .num{width:30px;height:30px;border-radius:50%;background:#1d4ed8;color:#fff;border:2px solid #fff;
+       box-shadow:0 2px 6px rgba(0,0,0,.4);font:700 15px/30px sans-serif;text-align:center;cursor:pointer}
+  .num.on{background:#f59e0b}
+  .stn{transform:translate(-50%,-100%);text-align:center;pointer-events:none}
+  .stn b{display:inline-block;background:#e11d48;color:#fff;font-size:13px;padding:3px 8px;border-radius:6px;
+         box-shadow:0 2px 6px rgba(0,0,0,.3);margin-bottom:2px;white-space:nowrap}
+  .pop{position:relative;left:22px;transform:translateY(-50%);background:#fff;border-radius:10px;padding:12px 14px;
+       width:230px;box-shadow:0 4px 14px rgba(0,0,0,.3);font-size:14px;line-height:1.6;color:#222}
+  .pop .t{font-size:16px;font-weight:700;margin-bottom:2px;padding-right:20px}
+  .pop .x{position:absolute;top:6px;right:8px;border:0;background:none;font-size:20px;color:#888;cursor:pointer}
+  .pop .p{color:#1d4ed8;font-weight:700}
+  .pop .ev{color:#dc2626}
+  .pop a{color:#03c75a;font-weight:700;text-decoration:none}
+  .pop .ph{display:block;margin-top:8px;background:#1d4ed8;color:#fff;text-align:center;padding:8px;border-radius:8px}
+  @media (max-width:520px){.pop{left:0;transform:translate(-50%,22px)}}
+  .pop{pointer-events:auto}
+  .pop .ph.no{background:#ccc;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div class="head">수영구 원룸 매물<small>번호를 누르면 매물 정보가 나와요 · 채채부동산</small></div>
+<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=13ed94de05d6fc0b34c2e1e2e3311ffa&autoload=false"></script>
+<script>
+const L=[{"t": "세영시티빌 402호", "a": "수영동 453-9", "p": "500/43", "s": "11/15 퇴실", "ev": false, "lat": 35.169953511213, "lng": 129.113437466438, "ph": ""}, {"t": "아뜨리움 404호", "a": "광안동 1038-15", "p": "500/38", "s": "공실", "ev": true, "lat": 35.1696115385359, "lng": 129.111029370713, "ph": ""}, {"t": "수영리치빌 202호", "a": "수영동 452-22", "p": "300/43", "s": "11/27 퇴실", "ev": true, "lat": 35.1695725348173, "lng": 129.113647423123, "ph": ""}, {"t": "삼정시티빌 405호", "a": "수영동 453-14", "p": "500/40", "s": "공실", "ev": true, "lat": 35.1695559858493, "lng": 129.113180908497, "ph": ""}, {"t": "삼정쉐르빌 202호", "a": "수영동 451-4", "p": "500/40", "s": "11월 말 퇴실", "ev": true, "lat": 35.1693296593623, "lng": 129.113157820554, "ph": ""}, {"t": "유성빌 401호", "a": "수영동 449-2", "p": "200/37", "s": "공실", "ev": true, "lat": 35.169142258412, "lng": 129.113981648898, "ph": ""}, {"t": "힐그린빌 301호", "a": "광안동 1056-26", "p": "200/42", "s": "공실", "ev": true, "lat": 35.1682981664609, "lng": 129.109940450692, "ph": ""}, {"t": "정랑원룸 902호", "a": "광안동 44-5", "p": "500/39", "s": "1월 중순 퇴실", "ev": false, "lat": 35.1680729360804, "lng": 129.11917925243, "ph": ""}, {"t": "포세이돈 601호", "a": "광안동 1069-9", "p": "500/40", "s": "12월 말 퇴실", "ev": false, "lat": 35.1669178405558, "lng": 129.112955259921, "ph": ""}, {"t": "포세이돈 304호", "a": "광안동 1069-9", "p": "1000/48", "s": "12월 말 퇴실", "ev": false, "lat": 35.1669178405558, "lng": 129.112955259921, "ph": ""}, {"t": "센텀캐슬B 304호", "a": "광안동 88-34", "p": "500/37", "s": "12/31 퇴실", "ev": true, "lat": 35.1658270410646, "lng": 129.115992393675, "ph": ""}, {"t": "카이저 504호", "a": "광안동 90-54", "p": "1000/40", "s": "2/6 퇴실", "ev": true, "lat": 35.1651170550619, "lng": 129.115856574771, "ph": ""}, {"t": "풀하우스 503호", "a": "광안동 97-16", "p": "400/40", "s": "공실", "ev": true, "lat": 35.1649026490839, "lng": 129.116084762103, "ph": ""}, {"t": "부성팰리스 405호", "a": "민락동 143-23", "p": "500/30", "s": "12/13 퇴실", "ev": true, "lat": 35.1647903483901, "lng": 129.118966432663, "ph": ""}, {"t": "부성팰리스 502호", "a": "민락동 143-23", "p": "500/30", "s": "11월 말 퇴실", "ev": true, "lat": 35.1647903483901, "lng": 129.118966432663, "ph": ""}, {"t": "그린비치빌 201호", "a": "광안동 688-21", "p": "500/40", "s": "세입자 있음, 입주 협의", "ev": true, "lat": 35.1646947290511, "lng": 129.113532020474, "ph": ""}, {"t": "부성팰리스 503호", "a": "광안동 96-12", "p": "300/35", "s": "공실", "ev": true, "lat": 35.1637868354713, "lng": 129.116255458736, "ph": ""}, {"t": "골든빌 205호", "a": "광안동 696-11", "p": "300/45", "s": "공실", "ev": true, "lat": 35.163672922862, "lng": 129.112632945954, "ph": ""}, {"t": "서준빌 504호", "a": "광안동 100-4", "p": "300/36", "s": "공실", "ev": true, "lat": 35.1634736106752, "lng": 129.116301002598, "ph": ""}, {"t": "대성레미안 305호", "a": "광안동 100-3", "p": "500/45", "s": "공실", "ev": true, "lat": 35.1632366637662, "lng": 129.116266879239, "ph": ""}, {"t": "제니스 405호", "a": "광안동 115-16", "p": "300/42", "s": "11/25 퇴실", "ev": false, "lat": 35.1624640522946, "lng": 129.115295233624, "ph": ""}, {"t": "제니스 404호", "a": "광안동 115-16", "p": "300/42", "s": "공실", "ev": false, "lat": 35.1624640522946, "lng": 129.115295233624, "ph": ""}, {"t": "조은집 503호", "a": "광안동 120-100", "p": "1000/30", "s": "공실", "ev": true, "lat": 35.1598316967248, "lng": 129.114578210165, "ph": ""}, {"t": "정원스마일 301호", "a": "광안동 134-34", "p": "500/40", "s": "12/14 퇴실", "ev": true, "lat": 35.1582402444997, "lng": 129.118415506367, "ph": ""}, {"t": "정원스마일 507호", "a": "광안동 134-34", "p": "300/40", "s": "11월 말 퇴실", "ev": true, "lat": 35.1582402444997, "lng": 129.118415506367, "ph": ""}];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const naver=a=>'https://map.naver.com/p/search/'+encodeURIComponent('부산 수영구 '+a);
+
+kakao.maps.load(()=>{
+  const map=new kakao.maps.Map(document.getElementById('map'),{center:new kakao.maps.LatLng(35.1685,129.1115),level:4});
+  map.addControl(new kakao.maps.ZoomControl(),kakao.maps.ControlPosition.RIGHT);
+
+  const pop=new kakao.maps.CustomOverlay({xAnchor:0,yAnchor:0,zIndex:100,clickable:true});
+  let cur=null;
+  const close=()=>{pop.setMap(null); if(cur) cur.classList.remove('on'); cur=null;};
+  const bounds=new kakao.maps.LatLngBounds(); const marks=[];
+
+  L.forEach((x,i)=>{
+    const pos=new kakao.maps.LatLng(x.lat,x.lng); bounds.extend(pos);
+    const d=document.createElement('div'); d.className='num'; d.textContent=i+1;
+    marks.push({d,pos});
+    d.addEventListener('click',e=>{
+      e.stopPropagation(); close(); cur=d; d.classList.add('on');
+      const w=document.createElement('div'); w.className='pop';
+      w.innerHTML='<button class="x" aria-label="닫기">×</button>'+
+        '<div class="t">'+(i+1)+'. '+esc(x.t)+'</div>'+
+        '<div>'+esc(x.a)+'</div>'+
+        '<div class="p">'+esc(x.p)+'</div>'+
+        (x.s?'<div>'+esc(x.s)+'</div>':'')+
+        (x.ev?'<div class="ev">엘베없음</div>':'')+
+        '<div>네이버지도 바로가기: <a href="'+naver(x.a)+'" target="_blank" rel="noopener">열기</a></div>'+
+        (x.ph?'<a class="ph" href="'+esc(x.ph)+'" target="_blank" rel="noopener">📷 사진 보러가기</a>'
+             :'<span class="ph no">사진 준비 중</span>');
+      w.querySelector('.x').onclick=ev=>{ev.stopPropagation(); close();};
+      ['mousedown','touchstart','click'].forEach(t=>w.addEventListener(t,ev=>ev.stopPropagation()));
+      pop.setContent(w); pop.setPosition(pos); pop.setMap(map);
+      if(w.parentElement) w.parentElement.style.pointerEvents='none';
+      map.panTo(pos);
+    });
+    new kakao.maps.CustomOverlay({map,position:pos,content:d,xAnchor:0.5,yAnchor:0.5,zIndex:60,clickable:true});
+  });
+  kakao.maps.event.addListener(map,'click',close);
+  // 붙어 있는 번호 겹침 방지: 확대 단계마다 화면에서만 벌림(좌표는 그대로)
+  const spread=()=>{
+    const pr=map.getProjection(), P=marks.map(m=>{const c=pr.containerPointFromCoords(m.pos);return {x:c.x,y:c.y,ox:0,oy:0};});
+    for(let k=0;k<20;k++) for(let i=0;i<P.length;i++) for(let j=i+1;j<P.length;j++){
+      const a=P[i],b=P[j]; let dx=(b.x+b.ox)-(a.x+a.ox), dy=(b.y+b.oy)-(a.y+a.oy), dd=Math.hypot(dx,dy);
+      if(dd>=32) continue; if(dd<0.01){dx=1;dy=0;dd=1;}
+      const push=(32-dd)/2; a.ox-=dx/dd*push; a.oy-=dy/dd*push; b.ox+=dx/dd*push; b.oy+=dy/dd*push; }
+    marks.forEach((m,i)=>m.d.style.transform='translate('+P[i].ox.toFixed(1)+'px,'+P[i].oy.toFixed(1)+'px)');
+  };
+  kakao.maps.event.addListener(map,'zoom_changed',()=>setTimeout(spread,0));
+  map.setBounds(bounds,60,40,40,40); setTimeout(spread,0);
+});
+</script>
+</body>
+</html>
